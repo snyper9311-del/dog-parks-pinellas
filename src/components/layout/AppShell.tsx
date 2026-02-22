@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useAppContext } from '../../context/AppContext'
 import { Header } from './Header'
 import { FilterBar } from '../controls/FilterBar'
@@ -21,6 +21,7 @@ interface AppShellProps {
 
 export function AppShell({ onToggleVisit }: AppShellProps) {
   const { state, dispatch } = useAppContext()
+  const [showPrivateBanner, setShowPrivateBanner] = useState(false)
 
   // Restore activeView from localStorage on mount
   useEffect(() => {
@@ -32,11 +33,31 @@ export function AppShell({ onToggleVisit }: AppShellProps) {
     } catch {
       // ignore
     }
+
+    // Check if localStorage is available
+    try {
+      localStorage.setItem('dpp_test', '1')
+      localStorage.removeItem('dpp_test')
+    } catch {
+      setShowPrivateBanner(true)
+    }
   }, [dispatch])
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      {showPrivateBanner && (
+        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-sm text-amber-800 flex items-center justify-between">
+          <span>Visit tracking is limited in private browsing mode.</span>
+          <button
+            type="button"
+            onClick={() => setShowPrivateBanner(false)}
+            className="ml-4 text-amber-600 hover:text-amber-800 font-medium"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
       <main className="max-w-7xl mx-auto px-4 py-6">
         <FilterBar />
         {state.activeView === 'table' ? (

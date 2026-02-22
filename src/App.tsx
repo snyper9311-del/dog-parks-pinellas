@@ -1,13 +1,12 @@
 import { AppProvider } from './context/AppProvider'
 import { AppShell } from './components/layout/AppShell'
 import { useParkData } from './hooks/useParkData'
+import { useVisitToggle } from './hooks/useVisitToggle'
 
 function AppContent() {
   useParkData()
-  // onToggleVisit will be wired to useVisitToggle in Phase 5
-  // For now pass a no-op so the table renders
-  function handleToggleVisit(_parkId: string) {}
-  return <AppShell onToggleVisit={handleToggleVisit} />
+  const toggleVisit = useVisitToggle()
+  return <AppShell onToggleVisit={toggleVisit} />
 }
 
 export default function App() {
