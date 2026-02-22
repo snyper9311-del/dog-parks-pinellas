@@ -87,7 +87,7 @@ export function ParkMap({ onToggleVisit }: ParkMapProps) {
         defaultCenter={PINELLAS_CENTER}
         defaultZoom={PINELLAS_DEFAULT_ZOOM}
         mapId={mapId}
-        style={{ width: '100%', height: '600px', borderRadius: '0.5rem' }}
+        style={{ width: '100%', height: 'min(600px, 80vh)', borderRadius: '0.5rem' }}
         gestureHandling="greedy"
       >
         <MapContent onToggleVisit={onToggleVisit} />

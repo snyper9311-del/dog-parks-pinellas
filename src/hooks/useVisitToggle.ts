@@ -6,7 +6,7 @@ import { trackEvent } from '../lib/analytics'
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 
-export function useVisitToggle() {
+export function useVisitToggle(onError?: (msg: string) => void) {
   const { state, dispatch } = useAppContext()
   const userId = useAnonymousUserId()
 
@@ -53,6 +53,7 @@ export function useVisitToggle() {
         type: 'TOGGLE_VISIT_ROLLBACK',
         payload: { parkId, originalValue: wasVisited },
       })
+      onError?.('Could not save your visit. Please try again.')
     }
   }
 }

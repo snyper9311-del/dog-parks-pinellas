@@ -9,7 +9,7 @@ const ParkMap = lazy(() => import('../map/ParkMap').then(m => ({ default: m.Park
 
 function MapLoadingPlaceholder() {
   return (
-    <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg text-gray-500">
+    <div className="flex items-center justify-center h-[60vh] bg-gray-100 rounded-lg text-gray-500">
       Loading map…
     </div>
   )

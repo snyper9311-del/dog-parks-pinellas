@@ -1,11 +1,12 @@
 import { useAppContext } from '../../context/AppContext'
 import { AMENITY_LABELS } from '../../lib/constants'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { trackEvent } from '../../lib/analytics'
 
 export function FilterBar() {
   const { state, dispatch } = useAppContext()
   const { filters, parks } = state
+  const [expanded, setExpanded] = useState(false)
 
   const cities = useMemo(() => {
     const unique = Array.from(new Set(parks.map(p => p.city))).sort()
@@ -43,8 +44,24 @@ export function FilterBar() {
         </select>
       </div>
 
-      {/* Row 2: Amenity checkboxes */}
-      <div className="flex flex-wrap gap-x-4 gap-y-2">
+      {/* Toggle button — mobile only */}
+      <div className="flex sm:hidden items-center justify-between">
+        <button
+          type="button"
+          onClick={() => setExpanded(e => !e)}
+          className="text-sm text-green-700 font-medium underline"
+          aria-expanded={expanded}
+          aria-controls="amenity-filters"
+        >
+          {expanded ? '▲ Hide Filters' : '▼ More Filters'}
+        </button>
+      </div>
+
+      {/* Amenity checkboxes — always visible on sm+, collapsible on mobile */}
+      <div
+        id="amenity-filters"
+        className={`flex flex-wrap gap-x-4 gap-y-2 ${expanded ? 'flex' : 'hidden'} sm:flex`}
+      >
         {Object.entries(AMENITY_LABELS).map(([key, label]) => (
           <label key={key} className="flex items-center gap-1.5 text-sm text-gray-700 cursor-pointer select-none">
             <input
@@ -67,7 +84,7 @@ export function FilterBar() {
         ))}
       </div>
 
-      {/* Row 3: Clear button */}
+      {/* Clear button — always visible */}
       <div className="flex justify-end">
         <button
           type="button"
