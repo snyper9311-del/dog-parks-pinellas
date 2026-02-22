@@ -1,19 +1,19 @@
 import { AppProvider } from './context/AppProvider'
+import { AppShell } from './components/layout/AppShell'
 import { useParkData } from './hooks/useParkData'
 
-function DataLoader() {
+function AppContent() {
   useParkData()
-  return null
+  // onToggleVisit will be wired to useVisitToggle in Phase 5
+  // For now pass a no-op so the table renders
+  function handleToggleVisit(_parkId: string) {}
+  return <AppShell onToggleVisit={handleToggleVisit} />
 }
 
 export default function App() {
   return (
     <AppProvider>
-      <DataLoader />
-      <div className="p-4">
-        <h1 className="text-2xl font-bold text-green-600">Dog Parks in Pinellas</h1>
-        <p className="text-gray-500 mt-2">Loading parks...</p>
-      </div>
+      <AppContent />
     </AppProvider>
   )
 }
