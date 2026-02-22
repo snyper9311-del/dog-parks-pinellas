@@ -1,12 +1,14 @@
 import clsx from 'clsx'
 import { useAppContext } from '../../context/AppContext'
 import { LOCAL_STORAGE_VIEW_KEY } from '../../lib/constants'
+import { trackEvent } from '../../lib/analytics'
 
 export function ViewToggle() {
   const { state, dispatch } = useAppContext()
 
   function setView(view: 'table' | 'map') {
     dispatch({ type: 'SET_VIEW', payload: view })
+    trackEvent('view_switched', { view })
     try {
       localStorage.setItem(LOCAL_STORAGE_VIEW_KEY, view)
     } catch {
