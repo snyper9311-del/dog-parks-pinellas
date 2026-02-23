@@ -310,3 +310,34 @@ INSERT INTO public.dog_parks (
   'https://www.pinellaspark.com/parks/',
   'Community dog park with separate large and small dog sections.'
 );
+
+INSERT INTO dog_parks (
+  name, address, city, state, zip_code,
+  latitude, longitude,
+  acres, size_label,
+  is_fenced, has_small_dog_area, has_water_station, has_lighting,
+  has_parking, has_restrooms, has_benches_shade, is_leash_free,
+  hours, phone, website_url, notes
+) VALUES (
+  'Walsingham Park Dog Run',
+  '12615 102nd Ave N',
+  'Largo',
+  'FL',
+  '33778',
+  27.87669,
+  -82.80816,
+  3.0,
+  'Large',
+  true,
+  true,
+  false,
+  false,
+  true,
+  true,
+  true,
+  true,
+  '7:00 AM to Sunset',
+  '(727) 549-6142',
+  'https://pinellas.gov/parks/walsingham-park/',
+  'Three fenced runs (two large-dog, one small-dog) overlooking Walsingham Lake. Part of a 350-acre county park with 6 miles of trails.'
+);
