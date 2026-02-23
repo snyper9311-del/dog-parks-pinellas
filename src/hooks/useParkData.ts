@@ -6,7 +6,7 @@ import { useAnonymousUserId } from './useAnonymousUserId'
 import type { DogPark } from '../types'
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL as string)?.trim()
-const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY as string)?.trim()
+const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY as string)?.replace(/\s/g, '')
 
 export function useParkData() {
   const { dispatch } = useAppContext()
