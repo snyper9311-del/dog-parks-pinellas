@@ -13,19 +13,25 @@ export function useParkData() {
   const userId = useAnonymousUserId()
 
   useEffect(() => {
+    console.log('[useParkData] useEffect fired, userId:', userId)
     if (!userId) return
 
     async function load() {
+      console.log('[useParkData] load() called, userId:', userId)
+      console.log('[useParkData] SUPABASE_URL:', SUPABASE_URL)
       dispatch({ type: 'SET_LOADING', payload: true })
 
       const authedClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         global: { headers: { 'x-anonymous-user-id': userId! } },
       })
 
+      console.log('[useParkData] firing Promise.all')
       const [parksResult, visitsResult] = await Promise.all([
         supabase.from('dog_parks').select('*').order('name'),
         authedClient.from('park_visits').select('park_id'),
       ])
+      console.log('[useParkData] parksResult.error:', parksResult.error, 'data count:', parksResult.data?.length)
+      console.log('[useParkData] visitsResult.error:', visitsResult.error)
 
       if (parksResult.error) {
         dispatch({ type: 'SET_ERROR', payload: 'Unable to load park data. Please refresh.' })
