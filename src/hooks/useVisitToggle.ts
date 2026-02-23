@@ -3,8 +3,8 @@ import { useAppContext } from '../context/AppContext'
 import { useAnonymousUserId } from './useAnonymousUserId'
 import { trackEvent } from '../lib/analytics'
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL as string)?.trim()
+const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY as string)?.trim()
 
 export function useVisitToggle(onError?: (msg: string) => void) {
   const { state, dispatch } = useAppContext()
